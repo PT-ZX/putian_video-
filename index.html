@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>我的视频号</title>
+<title>海丝文化视频</title>
 <style>
   :root {
     --bg: #0f1115;
@@ -163,11 +163,47 @@
   .hint { color: rgba(255,255,255,0.6); }
 
   .empty { text-align: center; padding: 60px 20px; color: var(--text-3); }
+  .cover-page {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cover-page.hide {
+  display: none;
+}
+
+.cover-page img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cover-page .enter-text {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
 </style>
 </head>
 <body>
+  <div class="cover-page" id="coverPage">
+  <img src="cover.png" alt="封面">
+  <div class="enter-text">点击进入</div>
+</div>
 <header>
-  <h1>我的视频号</h1>
+  <h1>海丝文化视频</h1>
   <span class="meta" id="meta"></span>
   <input type="text" class="search" id="search" placeholder="搜索标题…" />
 </header>
@@ -205,8 +241,6 @@ const DATA = {
     { src: "东吴石塔短视频/东吴石塔04.mp4", title: "东吴石塔04", series: "东吴石塔" },
     { src: "东甲塔视频/东甲塔01.mp4", title: "东甲塔01", series: "东甲塔" },
     { src: "东甲塔视频/东甲塔02.mp4", title: "东甲塔02", series: "东甲塔" },
-    { src: "东甲塔视频/东甲塔03.mp4", title: "东甲塔03", series: "东甲塔" },
-    { src: "东甲塔视频/东甲塔04.mp4", title: "东甲塔04", series: "东甲塔" },
     { src: "瓷器遗址短视频/南日岛沉船遗址.mp4", title: "南日岛沉船遗址", series: "瓷器遗址" },
     { src: "瓷器遗址短视频/瓷器遗址-溪口窑.mp4", title: "瓷器遗址-溪口窑", series: "瓷器遗址" },
     { src: "秀屿港短视频/秀屿港短视频01.mp4", title: "秀屿港01", series: "秀屿港" },
@@ -226,7 +260,8 @@ const DATA = {
     { src: "莆田 这些地名 与抗日 有关 - 抖音.mp4", title: "莆田这些地名，与抗日有关", series: "单集" },
     { src: "莆田文化答疑解惑为什么戚继光对莆田贡献这么大但是感觉影响力没那么大莆田人是把戚继光当英雄当爱国将领来纪念而不是神宗族文化 地方习.mp4", title: "莆田文化答疑：为什么戚继光的影响力没那么大", series: "单集" },
     { src: "随性索真 莆田到底多牛一张名单震碎三观古代朝堂半壁江山都是莆阳人 太炸裂了莆田古代朝堂天团曝光宰辅尚书翰林扎堆半壁江山都是莆阳人.mp4", title: "莆田到底多牛：古代朝堂半壁江山都是莆阳人", series: "单集" },
-    { src: "d8d3db642263759310d692439cdea2f1.mp4", title: "未命名视频", series: "单集" },
+    { src: "d8d3db642263759310d692439cdea2f1.mp4", title: "木兰溪畔", series: "单集" },
+    { src: "践行木兰溪治理重要理念.mp4", title: "践行木兰溪治理重要理念", series: "单集" },
   ]
 };
 
@@ -246,6 +281,11 @@ const playerVideo = document.getElementById('playerVideo');
 const playerTitle = document.getElementById('playerTitle');
 const playerSeries = document.getElementById('playerSeries');
 const playerPos = document.getElementById('playerPos');
+const coverPage = document.getElementById('coverPage');
+
+coverPage.addEventListener('click', () => {
+  coverPage.classList.add('hide');
+});
 
 meta.textContent = `${videos.length} 个视频 · ${seriesOrder.length} 个系列`;
 render();
